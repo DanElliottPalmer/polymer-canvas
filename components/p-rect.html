@@ -1,0 +1,56 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+
+<script>
+  Polymer({
+    "_forceRender": function(){
+        if( this.parentCanvas !== undefined ) this.parentCanvas.render();
+    },
+    "attached": function(){},
+    "attributeChanged": function(){},
+    "created": function(){},
+    "is": "p-rect",
+    "properties": {
+        "fill": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": String,
+            "value": "#000"
+        },
+        "height": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        },
+        "parentCanvas": {
+            "type": Object,
+            "value": undefined
+        },
+        "width": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        },
+        "x": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        },
+        "y": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        }
+    },
+    "ready": function() {},
+    "render": function( ctx ){
+        ctx.save();
+        ctx.fillStyle = this.fill;
+        ctx.fillRect( this.x, this.y, this.width, this.height );
+        ctx.restore();
+    },
+  });
+</script>
