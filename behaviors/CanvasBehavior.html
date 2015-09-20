@@ -1,3 +1,5 @@
+<link rel="import" href="../behaviors/CanvasGroupNodeBehavior.html" />
+
 <script>
 
     var CanvasBehavior = {
@@ -15,6 +17,7 @@
         "created": function(){},
 
         "properties": {
+
             "ctx": {
                 "readOnly": true,
                 "type": Object,
@@ -22,6 +25,14 @@
                     return this.getContext("2d");
                 },
             }
+
+        },
+
+        "ready": function(){
+            this.__setProperty( "parentCanvas", this );
+            this._childNodeObserver.observe( this, {
+                "childList": true
+            });
         },
 
         "render": function(){
@@ -34,5 +45,7 @@
         }
 
     };
+
+    CanvasBehavior = [ CanvasGroupNodeBehavior, CanvasBehavior ];
 
 </script>
