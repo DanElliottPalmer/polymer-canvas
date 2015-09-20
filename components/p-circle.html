@@ -6,25 +6,13 @@
     "behaviors": [ CanvasNodeBehavior ],
     "containsPoint": function( x, y ){
         var distance = Math.sqrt(
-            Math.pow( x - this.cx, 2 ) +
-            Math.pow( y - this.cy, 2 )
+            Math.pow( x - this.canvasX, 2 ) +
+            Math.pow( y - this.canvasY, 2 )
         );
         return distance <= this.radius;
     },
     "is": "p-circle",
     "properties": {
-        "cx": {
-            "observer": "_forceRender",
-            "reflectToAttribute": true,
-            "type": Number,
-            "value": 0
-        },
-        "cy": {
-            "observer": "_forceRender",
-            "reflectToAttribute": true,
-            "type": Number,
-            "value": 0
-        },
         "fill": {
             "observer": "_forceRender",
             "reflectToAttribute": true,
@@ -36,6 +24,18 @@
             "reflectToAttribute": true,
             "type": Number,
             "value": 0
+        },
+        "x": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        },
+        "y": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
         }
     },
     "render": function( canvas ){
@@ -43,7 +43,7 @@
         ctx.save();
         ctx.fillStyle = this.fill;
         ctx.beginPath();
-        ctx.arc( this.cx, this.cy, this.radius, 0, Math.PI*2, false );
+        ctx.arc( this.x, this.y, this.radius, 0, Math.PI*2, false );
         ctx.closePath();
         ctx.fill();
         ctx.restore();
