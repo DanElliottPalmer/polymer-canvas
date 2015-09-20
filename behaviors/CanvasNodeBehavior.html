@@ -2,11 +2,45 @@
 
     var CanvasNodeBehavior = {
 
+        "_getCanvasX": function( _x ){
+            var parent = this.parentNode;
+            var x = 0;
+            var thisX = _x || 0;
+            while( parent && parent.parentCanvas !== parent ){
+                x += parent.canvasX;
+                parent = parent.parentNode;
+            }
+            return x + thisX;
+        },
+
+        "_getCanvasY": function( _y ){
+            var parent = this.parentNode;
+            var y = 0;
+            var thisY = _y || 0;
+            while( parent && parent.parentCanvas !== parent ){
+                y += parent.canvasY;
+                parent = parent.parentNode;
+            }
+            return y + thisY;
+        },
+
         "_forceRender": function(){
             if( this.parentCanvas !== undefined ) this.parentCanvas.render();
         },
 
         "properties": {
+
+            "canvasX": {
+                "computed": "_getCanvasX(x)",
+                "readOnly": true,
+                "type": Number
+            },
+
+            "canvasY": {
+                "computed": "_getCanvasY(y)",
+                "readOnly": true,
+                "type": Number
+            },
 
             "parentCanvas": {
                 "readOnly": true,
