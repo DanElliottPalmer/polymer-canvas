@@ -5,6 +5,28 @@
 <script>
   Polymer({
     "behaviors": [ CanvasGroupNodeBehavior, CanvasNodeBehavior ],
+    "containsPoint": function( x, y ){
+        var length = this.children.length;
+        var child = null;
+        while( length-- ){
+            child = this.children[ length ];
+            if( child.containsPoint( x, y ) ){
+                return true;
+            }
+        }
+        return false;
+    },
+    "containsPointAndFire": function( x, y, eventType, eventData ){
+        var length = this.children.length;
+        var child = null;
+        while( length-- ){
+            child = this.children[ length ];
+            if( child.containsPointAndFire( x, y, eventType, eventData ) ){
+                return true;
+            }
+        }
+        return false;
+    },
     "is": "p-group",
     "properties": {
         "x": {
