@@ -1,0 +1,35 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+<link rel="import" href="../behaviors/CanvasNodeBehavior.html" />
+<link rel="import" href="../behaviors/CanvasGroupNodeBehavior.html" />
+
+<script>
+  Polymer({
+    "behaviors": [ CanvasGroupNodeBehavior, CanvasNodeBehavior ],
+    "is": "p-group",
+    "properties": {
+        "x": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        },
+        "y": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        }
+    },
+    "render": function( canvas ){
+        var ctx = canvas.ctx;
+        var i = -1;
+        var length = this.children.length;
+        ctx.save();
+        ctx.translate( this.x, this.y );
+        while( ++i < length ){
+            this.children[ i ].render( canvas );
+        }
+        ctx.restore();
+    }
+  });
+</script>
