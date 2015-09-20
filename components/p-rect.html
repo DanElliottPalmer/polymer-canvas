@@ -4,6 +4,10 @@
 <script>
   Polymer({
     "behaviors": [ CanvasNodeBehavior ],
+    "containsPoint": function( x, y ){
+        return this.canvasX < x && this.canvasX + this.width > x &&
+               this.canvasY < y && this.canvasY + this.height > y;
+    },
     "is": "p-rect",
     "properties": {
         "fill": {
