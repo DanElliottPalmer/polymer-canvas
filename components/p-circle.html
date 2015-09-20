@@ -1,0 +1,52 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+<link rel="import" href="../behaviors/CanvasNodeBehavior.html" />
+
+<script>
+  Polymer({
+    "behaviors": [ CanvasNodeBehavior ],
+    "containsPoint": function( x, y ){
+        var distance = Math.sqrt(
+            Math.pow( x - this.cx, 2 ) +
+            Math.pow( y - this.cy, 2 )
+        );
+        return distance <= this.radius;
+    },
+    "is": "p-circle",
+    "properties": {
+        "cx": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        },
+        "cy": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        },
+        "fill": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": String,
+            "value": "#000"
+        },
+        "radius": {
+            "observer": "_forceRender",
+            "reflectToAttribute": true,
+            "type": Number,
+            "value": 0
+        }
+    },
+    "render": function( canvas ){
+        var ctx = canvas.ctx;
+        ctx.save();
+        ctx.fillStyle = this.fill;
+        ctx.beginPath();
+        ctx.arc( this.cx, this.cy, this.radius, 0, Math.PI*2, false );
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+  });
+</script>
