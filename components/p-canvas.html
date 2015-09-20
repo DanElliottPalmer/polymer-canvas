@@ -1,75 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html" />
+<link rel="import" href="../behaviors/CanvasNodeBehavior.html" />
+<link rel="import" href="../behaviors/CanvasBehavior.html" />
 
 <script>
-    var CanvasBehavior = {
-        "_childnodesChanged": function( mutations ){
-            var canvas = this;
-            mutations.forEach(function( mutation ){
-                forEach( mutation.addedNodes, function( node ){
-                    node.__setProperty( "parentCanvas", canvas );
-                });
-                forEach( mutation.removedNodes, function( node ){
-                    node.__setProperty( "parentCanvas", undefined );
-                });
-            });
-            this.render();
-        },
-        "attached": function(){
-            forEach( this.children, function( child ){
-                child.__setProperty( "parentCanvas", this );
-            }.bind( this ));
-            this.render();
-        },
-        "attributeChanged": function( name, previousValue, newValue ){},
-        "clear": function( _x, _y, _w, _h ){
-            var x = typeof _x === "Number" ? _x : 0;
-            var y = typeof _y === "Number" ? _y : 0;
-            var w = typeof _w === "Number" ? _w : this.width;
-            var h = typeof _h === "Number" ? _h : this.height;
-            this.ctx.clearRect( x, y, w, h  );
-        },
-        "created": function(){},
-        "properties": {
-            "_childNodeObserver": {
-                "readOnly": true,
-                "type": Object,
-                "value": function(){
-                    return new MutationObserver( this._childnodesChanged.bind( this ) );
-                }
-            },
-            "ctx": {
-                "readOnly": true,
-                "type": Object,
-                "value": function(){
-                    return this.getContext("2d");
-                },
-            }
-        },
-        "ready": function(){
-            this._childNodeObserver.observe( this, {
-                "childList": true
-            });
-        },
-        "render": function(){
-            var ctx = this.ctx;
-            var i = -1;
-            var length = this.children.length;
-            this.clear();
-            while( ++i < length ){
-                this.children[ i ].render( ctx );
-            }
-        }
-    };
-
-    function forEach( collection, fn ){
-        if( Array.isArray( collection ) ){
-            return collection.forEach( fn );
-        }
-        return Array.prototype.forEach.call( collection, fn );
-    }
-
     Polymer({
-      "behaviors": [ CanvasBehavior ],
+      "behaviors": [ CanvasNodeBehavior, CanvasBehavior ],
       "extends": "canvas",
       "is": "p-canvas"
     });

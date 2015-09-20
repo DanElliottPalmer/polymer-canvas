@@ -1,0 +1,39 @@
+<script>
+
+    var CanvasBehavior = {
+
+        "attributeChanged": function( name, previousValue, newValue ){},
+
+        "clear": function( _x, _y, _w, _h ){
+            var x = typeof _x === "Number" ? _x : 0;
+            var y = typeof _y === "Number" ? _y : 0;
+            var w = typeof _w === "Number" ? _w : this.width;
+            var h = typeof _h === "Number" ? _h : this.height;
+            this.ctx.clearRect( x, y, w, h  );
+        },
+
+        "created": function(){},
+
+        "properties": {
+            "ctx": {
+                "readOnly": true,
+                "type": Object,
+                "value": function(){
+                    return this.getContext("2d");
+                },
+            }
+        },
+
+        "render": function(){
+            var ctx = this.ctx;
+            var i = -1;
+            var length = this.children.length;
+            this.clear();
+            while( ++i < length ){
+                this.children[ i ].render( ctx );
+            }
+        }
+
+    };
+
+</script>

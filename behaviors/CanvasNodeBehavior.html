@@ -1,0 +1,51 @@
+<script>
+
+    var CanvasNodeBehavior = {
+
+        "_childnodesChanged": function( mutations ){
+            var canvas = this;
+            mutations.forEach(function( mutation ){
+                forEach( mutation.addedNodes, function( node ){
+                    node.__setProperty( "parentCanvas", canvas );
+                });
+                forEach( mutation.removedNodes, function( node ){
+                    node.__setProperty( "parentCanvas", undefined );
+                });
+            });
+            this.render();
+        },
+
+        "attached": function(){
+            forEach( this.children, function( child ){
+                child.__setProperty( "parentCanvas", this );
+            }.bind( this ));
+            this.render();
+        },
+
+        "properties": {
+
+            "_childNodeObserver": {
+                "readOnly": true,
+                "type": Object,
+                "value": function(){
+                    return new MutationObserver( this._childnodesChanged.bind( this ) );
+                }
+            }
+        },
+
+        "ready": function(){
+            this._childNodeObserver.observe( this, {
+                "childList": true
+            });
+        }
+
+    };
+
+    function forEach( collection, fn ){
+        if( Array.isArray( collection ) ){
+            return collection.forEach( fn );
+        }
+        return Array.prototype.forEach.call( collection, fn );
+    }
+
+</script>
