@@ -25,12 +25,11 @@
         },
 
         "render": function(){
-            var ctx = this.ctx;
             var i = -1;
             var length = this.children.length;
             this.clear();
             while( ++i < length ){
-                this.children[ i ].render( ctx );
+                this.children[ i ].render( this );
             }
         }
 

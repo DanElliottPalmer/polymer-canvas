@@ -46,7 +46,8 @@
         }
     },
     "ready": function() {},
-    "render": function( ctx ){
+    "render": function( canvas ){
+        var ctx = canvas.ctx;
         ctx.save();
         ctx.fillStyle = this.fill;
         ctx.fillRect( this.x, this.y, this.width, this.height );
