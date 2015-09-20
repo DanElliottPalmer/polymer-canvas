@@ -3,8 +3,21 @@
 
 <script>
     Polymer({
-      "behaviors": [ CanvasBehavior ],
-      "extends": "canvas",
-      "is": "p-canvas"
+        "_canvasClick": function( e ){
+            var length = this.children.length;
+            var child = null;
+            while( length-- ){
+                child = this.children[ length ];
+                if( child.containsPointAndFire( e.offsetX, e.offsetY, "click", e ) ){
+                    return;
+                }
+            }
+        },
+        "behaviors": [ CanvasBehavior ],
+        "extends": "canvas",
+        "listeners": {
+        "click": "_canvasClick"
+        },
+        "is": "p-canvas"
     });
 </script>
