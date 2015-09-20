@@ -28,6 +28,18 @@
             if( this.parentCanvas !== undefined ) this.parentCanvas.render();
         },
 
+        "containsPoint": function( x, y ){
+            return false;
+        },
+
+        "containsPointAndFire": function( x, y, eventType, eventData ){
+            if( this.containsPoint( x, y ) ){
+                this.fire( eventType, eventData );
+                return true;
+            }
+            return false;
+        },
+
         "properties": {
 
             "canvasX": {
